@@ -1,6 +1,6 @@
 {
   "name": "@buildery/nest-jwt",
-  "version": "1.0.6",
+  "version": "1.0.10",
   "description": "Some useful Nestjs implementations",
   "main": "dist/main.js",
   "private": false,
@@ -26,6 +26,7 @@
   "dependencies": {
     "@buildery/nest-exception-handling": "^1.0.2",
     "@jira-killer/constants": "^1.0.20",
+    "@nestjs/config": "^3.1.1",
     "@nestjs/jwt": "^9.0.0"
   }
 }

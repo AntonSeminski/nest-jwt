@@ -16,7 +16,7 @@ export class AuthInfo {
 
         const payload = await jwtService
             .verify(token)
-            .catch(error => throwException(API_ERROR_CODES.AUTH.INVALID_TOKEN, {reason: error.message, tokenType: this.getByName(request, 'tokenType')}));
+            .catch(error => throwException( API_ERROR_CODES.AUTH.INVALID_TOKEN, {reason: error.message} ));
 
         if (!payload) throwException(API_ERROR_CODES.AUTH.NO_TOKEN_PAYLOAD);
 
@@ -50,7 +50,7 @@ export class AuthInfo {
         return this.getAllFromHeader(request.headers.authorization).then(payload => payload[fieldName]);
     }
 
-    static getByNames = async (request, fieldNames: string[]) => {
+    static getByNames = async (request, fieldNames: string[]): Promise<any[]> => {
         if (request.user) return fieldNames.map(fieldName => request.user[fieldName]);
 
         const authPayload = await this.getAllFromHeader(request.headers.authorization);
