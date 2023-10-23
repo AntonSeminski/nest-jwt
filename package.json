@@ -1,16 +1,16 @@
 {
   "name": "@buildery/nest-jwt",
-  "version": "1.0.10",
+  "version": "2.0.2",
   "description": "Some useful Nestjs implementations",
   "main": "dist/main.js",
   "private": false,
-  "scripts": {
-    "prepublishOnly": "npm run build",
-    "build": "tsc -p tsconfig.build.json"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AntonSeminski/nest-jwt.git"
+  },
+  "scripts": {
+    "prepublishOnly": "npm run build",
+    "build": "tsc -p tsconfig.build.json"
   },
   "keywords": [
     "nestjs",
@@ -24,8 +24,9 @@
   },
   "homepage": "https://github.com/AntonSeminski/nest-exception-handling#readme",
   "dependencies": {
-    "@buildery/nest-exception-handling": "^1.0.2",
-    "@jira-killer/constants": "^1.0.20",
+    "@buildery/nestjs-utils": "^1.0.1",
+    "@buildery/error-codes": "^1.1.0",
+    "@nestjs/common": "^10.2.7",
     "@nestjs/config": "^3.1.1",
     "@nestjs/jwt": "^9.0.0"
   }
