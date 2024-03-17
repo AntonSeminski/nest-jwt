@@ -3,7 +3,7 @@ import {Inject, Injectable} from "@nestjs/common";
 
 @Injectable()
 export class JwtTokenService {
-    @Inject(JwtService) private readonly jwtService;
+    @Inject() private readonly jwtService: JwtService;
 
     secret: string;
     expiresIn: string;
@@ -31,8 +31,8 @@ export class JwtTokenService {
     async generateFromToken(token) {
         const payload = await this.jwtService.decode(token);
 
-        delete payload.exp;
-        delete payload.iat;
+        delete payload['exp'];
+        delete payload['iat'];
 
         return this.jwtService.sign(payload, { secret: this.secret, expiresIn: this.expiresIn });
     }

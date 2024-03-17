@@ -1,6 +1,6 @@
 import {DynamicModule} from "@nestjs/common";
-import {WorkspaceTokenService} from "./services";
 import {JwtModule} from "@nestjs/jwt";
+import {WorkspaceTokenService} from "./workspace-token.service";
 
 export class JwtAuthModule {
     static register(options: {

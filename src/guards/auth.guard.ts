@@ -1,7 +1,7 @@
 import {CanActivate, ExecutionContext, Inject, Injectable, mixin} from '@nestjs/common';
-import {JwtTokenService} from '../services';
-import {throwException} from "@buildery/nestjs-utils";
+import {throwException} from "@buildery/nest-exception-handling";
 import {CODES} from "@buildery/error-codes";
+import {JwtTokenService} from "../jwt-token.service";
 
 export const AuthGuard: any = (tokenServiceType: JwtTokenService) => {
     @Injectable()
@@ -12,16 +12,28 @@ export const AuthGuard: any = (tokenServiceType: JwtTokenService) => {
             const request = context.switchToHttp().getRequest();
 
             try {
-                let accessToken: string;
+                let accessToken: string = undefined;
 
-                const [domain, app, base] = request.headers['origin']
+                //is internal
+                if (!request.headers?.isinternal) {
+                    request.user = {
+                        userId: request.headers?.['internal-user-id'],
+                        domain: request.headers?.['internal-domain']
+                    }
+
+                    return true;
+                }
+
+                // check cookies
+                const [domain, app, base] = request.headers?.['origin']
                     ?.substring(`http://`.length) //skip http://
                     ?.split('.') ?? [];
 
                 if (domain) {
-                    accessToken = request.cookies[`${domain}.${'accessToken'}`];
+                    accessToken = request.cookies?.[`${domain}.${'accessToken'}`];
                 }
 
+                // check authorization header
                 if (!accessToken && request.headers.authorization) {
                     const [type, token] = request.headers.authorization?.split(' ') ?? [];
 
@@ -40,6 +52,8 @@ export const AuthGuard: any = (tokenServiceType: JwtTokenService) => {
                 console.log(`e: ${e.message}`)
                 if (e.message.includes('expired')) throwException(CODES.SESSION.EXPIRED);
                 if (e.message.includes('signature')) throwException(CODES.AUTH.WRONG_CREDENTIALS);
+
+                return false;
             }
         }
     }

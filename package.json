@@ -1,6 +1,6 @@
 {
   "name": "@buildery/nest-jwt",
-  "version": "2.0.2",
+  "version": "2.0.11",
   "description": "Some useful Nestjs implementations",
   "main": "dist/main.js",
   "private": false,
@@ -25,9 +25,10 @@
   "homepage": "https://github.com/AntonSeminski/nest-exception-handling#readme",
   "dependencies": {
     "@buildery/nestjs-utils": "^1.0.1",
+    "@buildery/nest-exception-handling": "^1.0.3",
     "@buildery/error-codes": "^1.1.0",
     "@nestjs/common": "^10.2.7",
     "@nestjs/config": "^3.1.1",
-    "@nestjs/jwt": "^9.0.0"
+    "@nestjs/jwt": "^10.2.0"
   }
 }
