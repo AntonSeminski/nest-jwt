@@ -43,14 +43,10 @@ export class AuthInfo {
     }
 
     public static async getByName (request, fieldName: EAuthInfo) {
-        if (request.user) return request.user[fieldName];
-
-        return this.getAll(request.headers.authorization).then(payload => payload[fieldName]);
+        return (await this.getAll(request))[fieldName];
     }
 
     public static async getByNames (request, fieldNames: Array<EAuthInfo>): Promise<Array<any>> {
-        if (request.user) return fieldNames.map(fieldName => request.user[fieldName]);
-
         const authPayload = await this.getAll(request.headers.authorization);
 
         return fieldNames.map(fieldName => authPayload[fieldName]);
