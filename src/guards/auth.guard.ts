@@ -15,7 +15,7 @@ export const AuthGuard: any = (tokenServiceType: JwtTokenService) => {
                 let accessToken: string = undefined;
 
                 //is internal
-                if (!request.headers?.isinternal) {
+                if (request.headers?.isinternal) {
                     request.user = {
                         userId: request.headers?.['internal-user-id'],
                         domain: request.headers?.['internal-domain']
