@@ -31,22 +31,24 @@ export class AuthInfo {
     }
 
     public static async getAll(request): Promise<IAuthInfo> {
-        if (!request) throwException(CODES.COMMON.EMPTY_PARAM, { method: 'getAll' });
+        if (!request) return null;
 
         const authHeader = request.headers.authorization;
-        if (!authHeader) throwException(CODES.AUTH.NO_AUTH_HEADER);
+        if (!authHeader) return null;
 
         const token = authHeader.split(' ')?.[1];
-        if (!token) throwException(CODES.AUTH.NO_TOKEN);
+        if (!token) return null;
 
         return new JwtService({}).decode(token);
     }
 
     public static async getByName (request, fieldName: EAuthInfo) {
-        return (await this.getAll(request))[fieldName];
+        return (await this.getAll(request))?.[fieldName];
     }
 
     public static async getByNames (request, fieldNames: Array<EAuthInfo>): Promise<Array<any>> {
+        if (isHasEmpty(request, fieldNames)) return [];
+
         const authPayload = await this.getAll(request.headers.authorization);
 
         return fieldNames.map(fieldName => authPayload[fieldName]);

@@ -1,6 +1,6 @@
 {
   "name": "@buildery/nest-jwt",
-  "version": "2.0.14",
+  "version": "2.0.16",
   "description": "Some useful Nestjs implementations",
   "main": "dist/main.js",
   "private": false,

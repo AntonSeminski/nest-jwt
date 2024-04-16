@@ -21,6 +21,8 @@ export const AuthGuard: any = (tokenServiceType: JwtTokenService) => {
                         domain: request.headers?.['internal-domain']
                     }
 
+                    console.log(`set internal user id: ${JSON.stringify(request.user)}`);
+
                     return true;
                 }
 
@@ -46,6 +48,8 @@ export const AuthGuard: any = (tokenServiceType: JwtTokenService) => {
 
                 request.headers.authorization = `Bearer ${accessToken}`;
                 request.user = await this.tokenService.verify(accessToken);
+
+                console.log(`set authorization header user id: ${JSON.stringify(request.user)}`);
 
                 return true;
             } catch (e) {
